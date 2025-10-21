@@ -1,0 +1,57 @@
+{
+  "name": "simple-conversational-ai-rn",
+  "version": "1.0.0",
+  "description": "A simple React Native conversational AI app using ElevenLabs",
+  "main": "index.tsx",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "prebuild": "expo prebuild",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "elevenlabs",
+    "conversational-ai",
+    "voice-assistant"
+  ],
+  "author": "ElevenLabs",
+  "license": "MIT",
+  "dependencies": {
+    "@config-plugins/react-native-webrtc": "^12.0.0",
+    "@elevenlabs/react-native": "^0.2.1",
+    "@livekit/react-native": "^2.9.3",
+    "@livekit/react-native-expo-plugin": "^1.0.1",
+    "@livekit/react-native-webrtc": "^125.0.12",
+    "expo": "~53.0.20",
+    "expo-av": "~15.1.7",
+    "expo-battery": "~9.1.4",
+    "expo-brightness": "~13.1.4",
+    "expo-dev-client": "~5.2.4",
+    "expo-status-bar": "~2.2.3",
+    "livekit-client": "^2.15.4",
+    "react": "19.0.0",
+    "react-native": "0.79.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/react": "~19.0.10",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.9.3"
+  },
+  "expo": {
+    "install": {
+      "exclude": [
+        "react-native-safe-area-context"
+      ]
+    }
+  },
+  "private": true
+}
