@@ -323,36 +323,33 @@ const ConversationScreen = () => {
 
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>🎙️ Voice AI Assistant</Text>
-          <Text style={styles.subtitle}>
-            Production Ready • Custom Dev Build
-          </Text>
+          <Text style={styles.title}>Simple Conversations</Text>
         </View>
 
-        {/* Status Indicator */}
-        <View style={styles.statusContainer}>
-          <View
-            style={[
-              styles.statusDot,
-              { backgroundColor: getStatusColor(conversation.status) },
-            ]}
-          />
-          <Text style={styles.statusText}>
-            {getStatusText(conversation.status)}
-          </Text>
-        </View>
-
-        {/* Permission Status */}
-        <View style={styles.statusContainer}>
-          <View
-            style={[
-              styles.statusDot,
-              { backgroundColor: permissionsGranted ? '#10B981' : '#EF4444' },
-            ]}
-          />
-          <Text style={styles.statusText}>
-            Microphone: {permissionsGranted ? 'Granted' : 'Denied'}
-          </Text>
+        {/* Status Card */}
+        <View style={styles.statusCard}>
+          <View style={styles.statusRow}>
+            <View
+              style={[
+                styles.statusDot,
+                { backgroundColor: getStatusColor(conversation.status) },
+              ]}
+            />
+            <Text style={styles.statusText}>
+              {getStatusText(conversation.status)}
+            </Text>
+          </View>
+          <View style={styles.statusRow}>
+            <View
+              style={[
+                styles.statusDot,
+                { backgroundColor: permissionsGranted ? '#10B981' : '#EF4444' },
+              ]}
+            />
+            <Text style={styles.statusText}>
+              {permissionsGranted ? '🎤 Ready' : '🎤 Permission Needed'}
+            </Text>
+          </View>
         </View>
 
         {/* Speaking/Listening Indicator */}
@@ -377,20 +374,6 @@ const ConversationScreen = () => {
           </View>
         )}
 
-        {/* Conversation Mode Info */}
-        <View style={styles.toolsContainer}>
-          <Text style={styles.toolsTitle}>🎙️ Conversation Mode:</Text>
-          <Text style={styles.toolItem}>✅ Continuous listening enabled for natural conversation</Text>
-          <Text style={styles.toolItem}>🔄 Two-way communication with instant response</Text>
-        </View>
-
-        {/* Available Tools Info */}
-        <View style={styles.toolsContainer}>
-          <Text style={styles.toolsTitle}>📱 Available Device Tools:</Text>
-          <Text style={styles.toolItem}>• getBatteryLevel() - Check battery status</Text>
-          <Text style={styles.toolItem}>• changeBrightness(level) - Adjust screen brightness</Text>
-          <Text style={styles.toolItem}>• flashScreen() - Flash the screen</Text>
-        </View>
 
         {/* Main Action Buttons */}
         <View style={styles.buttonContainer}>
@@ -534,16 +517,34 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 32,
     color: '#1F2937',
     textAlign: 'center',
+    letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 16,
     color: '#6B7280',
     textAlign: 'center',
+  },
+  statusCard: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 16,
+    marginBottom: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    width: '100%',
+  },
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
   },
   statusContainer: {
     flexDirection: 'row',
@@ -618,15 +619,15 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#3B82F6',
-    paddingVertical: 16,
+    paddingVertical: 20,
     paddingHorizontal: 32,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 5,
   },
   startButton: {
     backgroundColor: '#10B981',
@@ -642,8 +643,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   feedbackContainer: {
     marginBottom: 24,
