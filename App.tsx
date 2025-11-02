@@ -514,6 +514,11 @@ const ConversationScreen = () => {
           </View>
         </View>
       )}
+
+      {/* Version Footer */}
+      <View style={styles.versionFooter}>
+        <Text style={styles.versionText}>v1.1 - {new Date().toLocaleDateString()}</Text>
+      </View>
     </LinearGradient>
   );
 };
@@ -783,5 +788,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: '#374151',
+  },
+
+  // Version Footer
+  versionFooter: {
+    position: 'absolute',
+    bottom: Platform.OS === 'android' ? 80 : 90,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  versionText: {
+    fontSize: 10,
+    color: '#9CA3AF',
+    fontWeight: '400',
   },
 });

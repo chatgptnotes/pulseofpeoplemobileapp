@@ -1,225 +1,259 @@
-# 🎙️ Simple Conversational AI React Native App
+# Cherri Pic Voice Agent
 
-A streamlined React Native application demonstrating voice conversations with ElevenLabs Conversational AI, featuring custom device interaction tools.
-This is a template i will use to make the 6 apps that i want to make on 2nd NOV 2025. This code only runs in a iphone or ipad device - not in simulator or local expo go. Install in a device. Summary of the Situation:
+A production-ready React Native mobile application featuring AI-powered voice conversations with ElevenLabs and Gemini AI integration, complete with device control capabilities.
 
-  1. Expo Go: ❌ Not Supported
-    - Cannot run because the app uses native modules
-  (WebRTC, LiveKit, ElevenLabs SDK)
-  2. iOS Simulator: ✅ Working (Except Audio)
-    - App runs perfectly
-    - AI connects and works
-    - Audio output doesn't work (simulator limitation with
-  WebRTC)
-  3. Physical iPhone: ⚠️ Needs Code Signing Setup
-    - Requires Apple Developer account configuration
-    - Needs team ID and provisioning profile
+**Template for building 6 apps - Nov 2, 2025**
 
-  Your Options:
+## Platform Support Summary
 
-  Option A: Continue with Simulator (Quick)
+1. **Expo Go**: Not Supported
+   - Cannot run because app uses native modules (WebRTC, LiveKit, ElevenLabs SDK)
 
-  The app IS working - the AI is responding, you just can't
-  hear it. You can verify it's working by:
-  - Reading the console logs (AI messages are coming
-  through)
-  - Using the text input feature to chat with AI
-  - Watching the "AI Speaking" / "Listening" indicators
+2. **iOS Simulator**: Working (Except Audio)
+   - App runs perfectly
+   - AI connects and works
+   - Audio output doesn't work (simulator limitation with WebRTC)
 
-  Option B: Fix Physical Device Deployment (15-20 min)
+3. **Physical iPhone/iPad**: Full Support
+   - Requires Apple Developer account configuration
+   - Needs team ID and provisioning profile
+   - Best option for testing voice features
 
-  Open Xcode and configure signing:
+## Features
 
-  open ios/SimpleConversationalAI.xcworkspace
+- Real-time voice conversations with ElevenLabs AI agents
+- Google Gemini AI text-based chat integration
+- Device control tools (battery monitoring, brightness, screen flash)
+- Beautiful gradient UI with responsive design
+- Continuous listening mode for seamless conversations
+- Cross-platform support (iOS & Android)
+- Version tracking with automatic footer display
 
-  Then in Xcode:
-  1. Select the project in the left sidebar
-  2. Select "SimpleConversationalAI" target
-  3. Go to "Signing & Capabilities"
-  4. Select your Team
-  5. Build to your iPhone
+## Quick Start
 
-     
-## ✨ Features
+### Prerequisites
 
-- **🗣️ Voice Conversations**: Real-time voice chat with AI agents
-- **📱 Device Integration**: Control device features (battery, brightness, vibration)
-- **💬 Text Messaging**: Send text messages and contextual updates
-- **👍 Feedback System**: Like/dislike feedback for AI responses
-- **📊 Status Indicators**: Visual connection and speaking/listening states
-- **🔧 Custom Tools**: Battery level, brightness control, screen flash, vibration
+- Node.js 18+
+- Expo CLI (`npm install -g @expo/cli`)
+- iOS Simulator or Android Emulator
+- ElevenLabs account with Conversational AI agent
+- Google Gemini API key
 
-## 📋 Prerequisites
+### Installation
 
-- **Node.js** 18+
-- **Expo CLI** (`npm install -g @expo/cli`)
-- **iOS Simulator** or **Android Emulator**
-- **ElevenLabs Account** with a Conversational AI agent
-
-## 🚀 Quick Start
-
-### 1. Clone and Setup
 ```bash
-# Navigate to the project directory
-cd simple-conversational-ai-rn
-
 # Install dependencies
 npm install
 
-# Create environment file
+# Create environment file from example
 cp .env.example .env
 ```
 
-### 2. Configure Your Agent
-1. Create an agent at [ElevenLabs Conversational AI](https://elevenlabs.io/app/conversational-ai/agents)
-2. Copy your Agent ID to `.env`:
-   ```
-   EXPO_PUBLIC_AGENT_ID=your_agent_id_here
-   ```
+### Environment Variables
 
-### 3. Prebuild for Native Dependencies
+Create a `.env` file with the following configuration:
+
 ```bash
-# Required for WebRTC and native modules
-npx expo prebuild
+# ElevenLabs Configuration
+EXPO_PUBLIC_AGENT_ID=your_agent_id_here
+EXPO_PUBLIC_ELEVENLABS_API_KEY=your_api_key_here
+
+# Google Gemini AI Configuration
+EXPO_PUBLIC_GEMINI_API_KEY=your_gemini_key_here
 ```
 
-### 4. Run the App
+Get your credentials:
+- ElevenLabs Agent ID: https://elevenlabs.io/app/conversational-ai/agents
+- ElevenLabs API Key: https://elevenlabs.io/app/settings/api-keys
+- Gemini API Key: https://aistudio.google.com/app/apikey
+
+### Development
+
 ```bash
+# Prebuild native dependencies (required for first run)
+npx expo prebuild
+
 # Start development server
-npx expo start
+npm start
 
 # Run on iOS
-npx expo run:ios
+npm run ios
 
 # Run on Android
-npx expo run:android
+npm run android
 ```
 
-## 🛠️ Custom Device Tools
+### Building for Production
 
-The app includes these custom tools that the AI can use:
-
-### 🔋 Battery Level
-```typescript
-// AI can ask: "What's my battery level?"
-getBatteryLevel() // Returns: "Battery level is 85%"
-```
-
-### 💡 Brightness Control
-```typescript
-// AI can say: "Set brightness to 75%"
-changeBrightness({ brightness: 75 }) // Sets screen brightness
-```
-
-### ⚡ Screen Flash
-```typescript
-// AI can say: "Flash the screen"
-flashScreen() // Briefly flashes screen to full brightness
-```
-
-### 📳 Device Vibration
-```typescript
-// AI can say: "Vibrate the device"
-vibrate({ pattern: 'medium' }) // Vibrates with specified intensity
-```
-
-## 🎯 Usage Examples
-
-Try these voice commands with your AI agent:
-
-- 🔋 **"Check my battery level"**
-- 💡 **"Change brightness to 50%"**
-- ⚡ **"Flash the screen"**
-- 📳 **"Vibrate the device"**
-- 📱 **"What's my device status?"**
-
-## 📁 Project Structure
-
-```
-simple-conversational-ai-rn/
-├── App.tsx                 # Main app component with conversation UI
-├── utils/
-│   └── deviceTools.ts      # Custom device interaction tools
-├── .env.example           # Environment variables template
-├── app.config.js          # Expo configuration
-├── package.json           # Dependencies and scripts
-├── tsconfig.json          # TypeScript configuration
-└── README.md              # This file
-```
-
-## 🔧 Configuration
-
-### Agent Setup
-Configure your ElevenLabs agent with these client tools:
-
-1. **getBatteryLevel**
-   - Description: "Get the current device battery level"
-   - No parameters required
-
-2. **changeBrightness**
-   - Description: "Change the screen brightness"
-   - Parameter: `brightness` (number, 0-100)
-
-3. **flashScreen**
-   - Description: "Flash the screen briefly"
-   - No parameters required
-
-4. **vibrate**
-   - Description: "Vibrate the device"
-   - Parameter: `pattern` (string, optional: 'light', 'medium', 'heavy')
-
-### Environment Variables
 ```bash
-# Required: Your ElevenLabs agent ID
-EXPO_PUBLIC_AGENT_ID=your_agent_id_here
+# Build for iOS
+eas build --platform ios
 
-# Optional: API key for private agents
-EXPO_PUBLIC_ELEVENLABS_API_KEY=your_api_key_here
+# Build for Android
+eas build --platform android
 ```
 
-## 📱 Platform Support
+## Available Commands
 
-- ✅ **iOS**: Full support with development build
-- ✅ **Android**: Full support with development build
-- ❌ **Web**: Not supported (WebRTC limitations)
-- ❌ **Expo Go**: Not supported (requires development build)
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start Expo development server |
+| `npm run ios` | Run app on iOS simulator/device |
+| `npm run android` | Run app on Android emulator/device |
+| `npm run prebuild` | Generate native project files |
+| `npm run lint` | Check code quality with ESLint |
+| `npm run type-check` | Run TypeScript type checking |
 
-## 🐛 Troubleshooting
+## Project Structure
+
+```
+Cherri_pic_voiceagent/
+├── App.tsx                          # Main application component
+├── utils/
+│   ├── deviceTools.ts               # Device control utilities
+│   ├── geminiService.ts             # Google Gemini AI integration
+│   └── voiceService.ts              # Voice recognition/synthesis
+├── assets/                          # App icons and images
+├── android/                         # Android native code
+├── ios/                             # iOS native code
+├── .env                             # Environment variables (not in git)
+├── .env.example                     # Environment template
+├── app.config.js                    # Expo configuration
+├── eas.json                         # EAS Build configuration
+├── package.json                     # Dependencies and scripts
+├── VERSION                          # Current version number
+├── CHANGELOG.md                     # Version history
+└── README.md                        # This file
+```
+
+## Custom Device Tools
+
+The AI agent can interact with these device tools:
+
+### Battery Level
+```typescript
+getBatteryLevel() // Returns current battery percentage
+```
+
+### Brightness Control
+```typescript
+changeBrightness({ brightness: 75 }) // Set screen brightness (0-100)
+```
+
+### Screen Flash
+```typescript
+flashScreen() // Flash screen to full brightness briefly
+```
+
+## Voice Commands Examples
+
+Try these commands with the voice agent:
+- "What's my battery level?"
+- "Set brightness to 50%"
+- "Flash the screen"
+- "Give me some creative ideas"
+- "Help me with my tasks"
+
+## Platform Support
+
+- iOS: Full support (requires development build)
+- Android: Full support (requires development build)
+- Web: Not supported (WebRTC limitations)
+- Expo Go: Not supported (requires native modules)
+
+## Testing
+
+After completing development tasks, test the app:
+
+**Local Development:**
+- iOS: Run on simulator via Expo Dev Client
+- Android: Run on emulator or physical device
+- Metro bundler: http://localhost:8081
+
+**Production Testing:**
+- Use EAS Build for testing production builds
+- TestFlight for iOS beta testing
+- Google Play Internal Testing for Android
+
+## Troubleshooting
 
 ### Common Issues
 
-**1. "Failed to start conversation"**
-- Verify your `EXPO_PUBLIC_AGENT_ID` in `.env`
-- Ensure agent is configured correctly in ElevenLabs dashboard
+**"Failed to start conversation"**
+- Verify EXPO_PUBLIC_AGENT_ID in .env file
+- Check ElevenLabs agent configuration
+- Ensure internet connection is stable
 
-**2. "Microphone permission denied"**
-- Check device microphone permissions
-- For simulators, configure audio input in settings
+**"Microphone permission denied"**
+- Grant microphone permissions in device settings
+- For iOS: Check Info.plist NSMicrophoneUsageDescription
+- For Android: Check AndroidManifest.xml permissions
 
-**3. "Native module errors"**
-- Run `npx expo prebuild` to generate native code
+**"Native module errors"**
+- Run `npx expo prebuild --clean`
 - Clear cache: `npx expo start --clear`
+- Reinstall dependencies: `rm -rf node_modules && npm install`
 
-### iOS Simulator Audio
-1. Open **Device > Audio > Input**
-2. Select **Microphone**
-3. Increase **Volume** (defaults to 0)
+### iOS Simulator Setup
+1. Device > Audio > Input > Microphone
+2. Increase volume (defaults to 0)
+3. Enable audio input in simulator settings
 
-### Android Emulator Audio
-1. Open **Extended Controls** (⋯)
-2. Go to **Microphone**
-3. Enable **Virtual microphone uses host audio input**
+### Android Emulator Setup
+1. Extended Controls (⋯) > Microphone
+2. Enable "Virtual microphone uses host audio input"
+3. Check system audio permissions
 
-## 📚 Learn More
+## Security Notes
 
-- [ElevenLabs Conversational AI Docs](https://elevenlabs.io/docs/conversational-ai/quickstart)
-- [ElevenLabs React Native SDK](https://elevenlabs.io/docs/libraries/conversational-ai-sdk-react-native)
-- [Expo Development Builds](https://docs.expo.dev/development/build/)
+- Never commit .env file to version control
+- Keep API keys secure and rotate regularly
+- Use environment-specific configurations
+- Validate all user inputs
+- Rate-limit API calls to prevent abuse
 
-## 📄 License
+## Version History
 
-MIT License - see [LICENSE](LICENSE) for details.
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
+
+Current version: **1.1**
+
+## FAQ
+
+**Q: Why do I need a development build?**
+A: The app uses native modules (WebRTC, voice) that aren't available in Expo Go.
+
+**Q: Can I use this with other AI providers?**
+A: The architecture supports multiple AI providers. Extend the services in `/utils` directory.
+
+**Q: How do I customize the UI?**
+A: Edit styles in App.tsx. The app uses Material Design principles.
+
+**Q: What's the cost of using this app?**
+A: ElevenLabs and Gemini have usage-based pricing. Check their pricing pages.
+
+**Q: Can I deploy this to app stores?**
+A: Yes, use EAS Build to create production builds for App Store and Play Store.
+
+## Learn More
+
+- [ElevenLabs Conversational AI](https://elevenlabs.io/docs/conversational-ai/quickstart)
+- [Google Gemini AI](https://ai.google.dev/docs)
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Documentation](https://reactnative.dev/docs/getting-started)
+- [EAS Build](https://docs.expo.dev/build/introduction/)
+
+## License
+
+MIT License
+
+## Support
+
+For issues and questions:
+- Open an issue on GitHub
+- Check existing documentation
+- Review troubleshooting section
 
 ---
 
-**Built with ❤️ using ElevenLabs Conversational AI**
+**v1.1 - Built with Claude Code Autonomous Agent using ElevenLabs Conversational AI & Google Gemini**
