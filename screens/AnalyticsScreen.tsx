@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
-import { LineChart, PieChart } from 'react-native-chart-kit';
+import { LineChart, PieChart } from 'react-native-gifted-charts';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../services/supabase';
 
@@ -110,8 +110,7 @@ export default function AnalyticsScreen({ navigation }: any) {
   };
 
   const generateTrendData = (data: any[], days: number) => {
-    const labels = [];
-    const scores = [];
+    const chartData = [];
     const daysToShow = Math.min(days, 30);
     const groupSize = Math.ceil(data.length / daysToShow);
 
@@ -123,12 +122,11 @@ export default function AnalyticsScreen({ navigation }: any) {
       if (group.length > 0) {
         const avgScore =
           group.reduce((acc, s) => acc + (s.sentiment_score || 0), 0) / group.length;
-        scores.push(avgScore);
-        labels.push(`D${i + 1}`);
+        chartData.push({ value: avgScore, label: `D${i + 1}` });
       }
     }
 
-    return { labels, datasets: [{ data: scores }] };
+    return chartData;
   };
 
   const generateSourceBreakdown = (data: any[]) => {
@@ -139,32 +137,28 @@ export default function AnalyticsScreen({ navigation }: any) {
 
     const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
     return Object.entries(sources).map(([name, count], index) => ({
-      name: name.replace('_', ' '),
-      population: count,
+      value: count,
+      text: name.replace('_', ' '),
       color: colors[index % colors.length],
-      legendFontColor: '#374151',
-      legendFontSize: 12,
     }));
   };
 
   const getMockTrendData = (days: number) => {
-    const labels = [];
-    const scores = [];
+    const chartData = [];
     const dataPoints = Math.min(days, 30);
 
     for (let i = 0; i < dataPoints; i++) {
-      labels.push(`D${i + 1}`);
-      scores.push(Math.random() * 2 - 1);
+      chartData.push({ value: Math.random() * 2 - 1, label: `D${i + 1}` });
     }
 
-    return { labels, datasets: [{ data: scores }] };
+    return chartData;
   };
 
   const getMockSourceData = () => [
-    { name: 'Social Media', population: 45, color: '#3B82F6', legendFontColor: '#374151', legendFontSize: 12 },
-    { name: 'Field Reports', population: 30, color: '#10B981', legendFontColor: '#374151', legendFontSize: 12 },
-    { name: 'Surveys', population: 15, color: '#F59E0B', legendFontColor: '#374151', legendFontSize: 12 },
-    { name: 'News', population: 10, color: '#EF4444', legendFontColor: '#374151', legendFontSize: 12 },
+    { value: 45, text: 'Social Media', color: '#3B82F6' },
+    { value: 30, text: 'Field Reports', color: '#10B981' },
+    { value: 15, text: 'Surveys', color: '#F59E0B' },
+    { value: 10, text: 'News', color: '#EF4444' },
   ];
 
   const onRefresh = () => {
@@ -243,7 +237,7 @@ export default function AnalyticsScreen({ navigation }: any) {
           </View>
         </View>
 
-        {sentimentTrend && (
+        {sentimentTrend && sentimentTrend.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Sentiment Trend</Text>
             <View style={styles.chartCard}>
@@ -251,44 +245,34 @@ export default function AnalyticsScreen({ navigation }: any) {
                 data={sentimentTrend}
                 width={chartWidth - 32}
                 height={220}
-                chartConfig={{
-                  backgroundColor: '#FFFFFF',
-                  backgroundGradientFrom: '#FFFFFF',
-                  backgroundGradientTo: '#FFFFFF',
-                  decimalPlaces: 2,
-                  color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(55, 65, 81, ${opacity})`,
-                  style: {
-                    borderRadius: 16,
-                  },
-                  propsForDots: {
-                    r: '4',
-                    strokeWidth: '2',
-                    stroke: '#3B82F6',
-                  },
-                }}
-                bezier
-                style={styles.chart}
+                color="#3B82F6"
+                thickness={3}
+                curved
+                spacing={30}
+                initialSpacing={10}
+                endSpacing={10}
+                noOfSections={5}
+                yAxisColor="#E5E7EB"
+                xAxisColor="#E5E7EB"
+                yAxisTextStyle={{ color: '#374151', fontSize: 10 }}
+                xAxisLabelTextStyle={{ color: '#374151', fontSize: 9 }}
               />
             </View>
           </View>
         )}
 
-        {sourceBreakdown && (
+        {sourceBreakdown && sourceBreakdown.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Source Breakdown</Text>
             <View style={styles.chartCard}>
               <PieChart
                 data={sourceBreakdown}
-                width={chartWidth - 32}
-                height={220}
-                chartConfig={{
-                  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                }}
-                accessor="population"
-                backgroundColor="transparent"
-                paddingLeft="15"
-                absolute
+                radius={90}
+                showText
+                textColor="#374151"
+                textSize={11}
+                showValuesAsLabels
+                centerLabelComponent={() => null}
               />
             </View>
           </View>
